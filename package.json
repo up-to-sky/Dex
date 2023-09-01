@@ -1,0 +1,56 @@
+{
+  "name": "canada-digitalassets-exchange",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.1.1",
+    "@testing-library/user-event": "^13.5.0",
+    "apexcharts": "^3.42.0",
+    "dotenv": "^16.0.0",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.1",
+    "react": "^18.0.0",
+    "react-apexcharts": "^1.4.1",
+    "react-blockies": "^1.4.1",
+    "react-dom": "^18.0.0",
+    "react-redux": "^7.2.6",
+    "react-scripts": "5.0.1",
+    "redux": "^4.1.2",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.4.1",
+    "reselect": "^4.1.5",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "2.0.2",
+    "@nomiclabs/hardhat-ethers": "2.2.3",
+    "chai": "4.3.6",
+    "ethers": "5.5.4",
+    "hardhat": "2.15.0"
+  }
+}

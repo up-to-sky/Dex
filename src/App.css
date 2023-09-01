@@ -1,0 +1,796 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+
+:root {
+  --clr-primary: #0A192F;
+  --clr-secondary: #172B4D;
+  --clr-neutral: #6B778D;
+
+  --clr-white: #F5F8FA;
+  --clr-blue: #1E88E5;
+  --clr-red: #FF4F4F;
+  --clr-green: #66BB6A;
+}
+
+/* ------------------------------------------------------ */
+
+html {
+  font-family: "DM Sans";
+  color: var(--clr-white);
+}
+
+main {
+  min-height: 100vh;
+}
+
+/* ------------------------------------------------------ */
+/* -- Text -- */
+
+h1 {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 500;
+}
+
+h2 {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+
+  margin: 0.375em 0;
+
+  font-weight: 500;
+  font-size: clamp(0.95rem, 2vw, 1.10rem);
+}
+
+p,
+small {
+  font-weight: 100;
+}
+
+small {
+  color: var(--clr-neutral);
+}
+
+/* ------------------------------------------------------ */
+/* -- Display -- */
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  padding-top: 30px;
+  margin: 0 auto;
+
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 500;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+/* ------------------------------------------------------ */
+
+.exchange__section--left {
+  background: var(--clr-secondary);
+  padding: 2em;
+
+  /* Grid Setup */
+  grid-column-start: 1;
+  grid-column-end: 13;
+}
+
+.exchange__section--right {
+  background: var(--clr-primary);
+
+  padding: 0.25em 0.75em 0;
+
+  /* Grid Setup */
+  grid-column-start: 1;
+  grid-column-end: 13;
+}
+
+/* ------------------------------------------------------ */
+/* Exchange Header */
+
+.exchange__header {
+  background: var(--clr-primary);
+  height: 10vh;
+
+  position: relative;
+}
+
+.exchange__header small {
+  margin: 0 0.50em 0 0;
+}
+
+.exchange__header select,
+.exchange__chart select {
+  background: transparent;
+  color: var(--clr-white);
+  border: none;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.exchange__header select:focus {
+  background: var(--clr-secondary);
+}
+
+.exchange__header--brand {
+  padding: 0.75em 2em;
+
+  grid-column-start: 1;
+  grid-column-end: 6;
+}
+
+.exchange__header--brand h1 {
+  display: none;
+}
+
+.exchange__header--networks {
+  grid-column-start: 12;
+  grid-column-end: 13;
+
+  grid-row: 2;
+
+  position: absolute;
+  top: 24px;
+  right: 64px;
+  transform: translate(0, -50%);
+}
+
+.exchange__header--account {
+  background: var(--clr-secondary);
+
+  position: absolute;
+  top: 50%;
+  right: 24px;
+  transform: translate(0, -50%);
+
+  width: 400px;
+  height: 48px;
+
+  border-radius: 10px;
+
+  grid-column-start: 9;
+  grid-column-end: 13;
+}
+
+.exchange__header--account p {
+  margin: 0 auto;
+}
+
+.exchange__header--account a,
+.exchange__header--account button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #222D41;
+  border: none;
+  color: var(--clr-white);
+
+  margin: 0;
+  border-radius: 10px;
+
+  width: 182px;
+  height: 48px;
+
+  font-size: 16px;
+  text-decoration: none;
+
+  transition: all 250ms ease;
+}
+
+.exchange__header--account button:hover {
+  background: var(--clr-blue);
+  border: none;
+}
+
+.exchange__header--account img {
+  width: 32px;
+  height: auto;
+  margin: 0 0 0 0.75em;
+}
+
+/* ------------------------------------------------------ */
+/* Universal Component */
+
+.component {
+  position: relative;
+}
+
+.component__header {
+  margin: 0 0 0.75em 0;
+}
+
+/* ------------------------------------------------------ */
+/* MARKET COMPONENT */
+
+.exchange__markets,
+.exchange__transfers,
+.exchange__orders {
+  grid-column-start: 2;
+  grid-column-end: 12;
+}
+
+.exchange__markets select {
+  background: var(--clr-primary);
+  color: var(--clr-text);
+  border: none;
+
+  width: 100%;
+  padding: 1em;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  appearance: none;
+  position: relative;
+}
+
+/* ------------------------------------------------------ */
+/* TRANSFERS COMPONENT */
+
+.exchange__transfers img {
+  float: left;
+  margin: 0 0.30em 0 0;
+}
+
+.exchange__transfers--form .flex-between {
+  padding: 0 3em 0.75em 0;
+}
+
+/* ------------------------------------------------------ */
+/* CHART COMPONENT */
+
+.exchange__chart {
+  background: var(--clr-secondary);
+
+  padding: 0.75em 1.75em;
+  margin: 0.75em;
+  min-height: 325px;
+
+  grid-column-start: 1;
+  grid-column-end: 13;
+}
+
+.apexcharts-canvas {
+  margin: 0 auto;
+}
+
+.apexcharts-tooltip {
+  background: var(--clr-primary);
+  color: var(--clr-white);
+}
+
+/* ------------------------------------------------------ */
+/* TRANSACTIONS COMPONENT */
+
+.exchange__transactions {
+  background: var(--clr-secondary);
+
+  padding: 0.75em 1.75em;
+  margin: 0.75em;
+
+  grid-column-start: 1;
+  grid-column-end: 13;
+
+  height: 215px;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+}
+
+.exchange__transactions::-webkit-scrollbar,
+.exchange__trades::-webkit-scrollbar {
+  background: var(--clr-blue);
+  width: 4px;
+}
+
+.exchange__transactions::-webkit-scrollbar-thumb,
+.exchange__trades::-webkit-scrollbar-thumb {
+  background: var(--clr-white);
+  border-radius: 15px;
+}
+
+/* ------------------------------------------------------ */
+/* TRADES COMPONENT */
+
+.exchange__trades {
+  background: var(--clr-secondary);
+
+  padding: 0.75em 1.75em;
+  margin: 0.75em;
+
+  grid-column-start: 1;
+  grid-column-end: 13;
+
+  height: 215px;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+}
+
+/* ------------------------------------------------------ */
+/* ORDERBOOK COMPONENT */
+
+.exchange__orderbook {
+  background: var(--clr-secondary);
+
+  padding: 0.75em 1.75em;
+  margin: 0.75em;
+
+  grid-column-start: 1;
+  grid-column-end: 13;
+}
+
+.exchange__orderbook--sell tbody tr:hover,
+.exchange__orderbook--buy tbody tr:hover {
+  background: var(--clr-primary);
+  cursor: pointer;
+}
+
+/* ------------------------------------------------------ */
+/* Images */
+
+.logo {
+  width: 35px;
+  height: auto;
+  margin: 0 0.5em 0 0;
+}
+
+.identicon {
+  margin: 0 0 0 0.60em;
+}
+
+/* ------------------------------------------------------ */
+/* Misc */
+
+hr {
+  background: #2E3950;
+
+  width: 100%;
+  height: 1px;
+  margin: 1.75em auto;
+
+  border: none;
+}
+
+.hr--vertical {
+  flex: 1;
+  background: #2E3950;
+
+  margin: 0 auto;
+  width: 1px;
+  height: 100%;
+}
+
+.divider {
+  padding: 0 15px;
+}
+
+/* ------------------------------------------------------ */
+/* HTML COMPONENTS */
+/* -- Button -- */
+
+.button,
+.button--sm {
+  background: transparent;
+  color: var(--clr-blue);
+
+  border: 1.5px solid var(--clr-blue);
+  border-radius: 10px;
+
+  width: 100%;
+  margin: 0.75em auto;
+  padding: 1.15em;
+
+  font-weight: 700;
+
+  cursor: pointer;
+  position: relative;
+
+  transition: all 250ms ease;
+}
+
+.button--sm {
+  width: 50%;
+
+  margin: 0 auto;
+  padding: 0.25em;
+
+  border-radius: 5px;
+}
+
+.button span {
+  position: relative;
+}
+
+.button span::after {
+  content: '';
+
+  background-image: url('./assets/right-arrow-blue.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  position: absolute;
+  top: 50%;
+  right: -14px;
+  transform: translate(50%, -50%);
+
+  width: 10px;
+  height: 12px;
+
+  transition: all 250ms ease;
+}
+
+.button:hover,
+.button--sm:hover {
+  color: var(--clr-white);
+  border: 1.5px solid var(--clr-white);
+}
+
+.button:hover span::after {
+  background-image: url('./assets/right-arrow-white.svg');
+  right: -18px;
+}
+
+.button--filled {
+  background: var(--clr-blue);
+  color: var(--clr-text);
+  border: 1px solid transparent;
+}
+
+.button--filled span::after {
+  background-image: url('./assets/right-arrow-white.svg');
+}
+
+.button--filled:hover {
+  border: 1px solid transparent;
+}
+
+/* ------------------------------------------------------ */
+/* -- Input -- */
+
+input {
+  background: var(--clr-primary);
+  color: var(--clr-text);
+
+  border: none;
+  border-radius: 10px;
+
+  width: 100%;
+  margin: 0.75em auto;
+  padding: 1.15em;
+
+  font-family: "DM Sans";
+  font-weight: 400;
+
+  outline: none;
+  position: relative;
+}
+
+input::placeholder {
+  color: var(--clr-neutral);
+}
+
+/* ------------------------------------------------------ */
+/* -- Tabs & Tab -- */
+
+.tabs {
+  background: var(--clr-primary);
+  border-radius: 10px;
+  padding: 0.20em;
+}
+
+.tab {
+  background: transparent;
+  color: var(--clr-text);
+
+  min-width: 6em;
+
+  padding: 0.50em 0.75em;
+
+  border: none;
+  border-radius: 8px;
+
+  font-family: "DM Sans";
+  font-weight: 500;
+
+  cursor: pointer;
+
+  position: relative;
+
+  /* transition: all 250ms ease; */
+}
+
+.tab--active {
+  background: var(--clr-blue);
+}
+
+/* ------------------------------------------------------ */
+/* -- Table -- */
+
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+table caption {
+  text-align: left;
+  margin: 0 0 0.50em;
+}
+
+table th {
+  color: var(--clr-neutral);
+
+  margin: 0.50em 0;
+
+  font-size: 0.85em;
+  font-weight: 500;
+  text-align: right;
+}
+
+table th img {
+  float: right;
+}
+
+table th:first-child,
+td:first-child {
+  text-align: left;
+  display: flex;
+}
+
+table td {
+  min-width: max-content;
+
+  margin: 0.25em 0;
+
+  font-size: clamp(0.90rem, 2vw, 0.95rem);
+  font-weight: 400;
+  text-align: right;
+}
+
+/* ------------------------------------------------------ */
+/* -- Alert -- */
+
+.alert {
+  background: #222D41;
+
+  height: 100px;
+  width: 300px;
+
+  position: fixed;
+  bottom: 1.50em;
+  right: 1.50em;
+  z-index: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+
+  cursor: pointer;
+
+  transition: all 500ms ease;
+}
+
+.alert a {
+  color: var(--clr-blue);
+  text-decoration: none;
+  margin: 0.25em;
+}
+
+.alert a:hover {
+  color: var(--clr-white);
+}
+
+.alert--remove {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------ */
+/* -- Banner -- */
+
+.banner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0 auto;
+}
+
+/* ------------------------------------------------------ */
+/* Media Queries */
+
+@media screen and (min-width: 576px) {
+
+  .exchange__markets,
+  .exchange__transfers,
+  .exchange__orders {
+    grid-column-start: 3;
+    grid-column-end: 11;
+  }
+
+  .exchange__header--brand h1 {
+    display: contents;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .exchange__header--brand {
+    grid-column-start: 1;
+    grid-column-end: 4;
+  }
+
+  .exchange__header--networks {
+    grid-column-start: 4;
+    grid-column-end: 6;
+    grid-row: 1;
+
+    position: absolute;
+    top: 50%;
+    left: 24px;
+    transform: translate(0, -50%);
+  }
+
+  .exchange__markets {
+    grid-column-start: 1;
+    grid-column-end: 6;
+
+    grid-row-start: 1;
+    grid-row-end: 3;
+  }
+
+  .exchange__orders {
+    grid-column-start: 1;
+    grid-column-end: 6;
+
+    grid-row-start: 2;
+    grid-row-end: 3;
+  }
+
+  .exchange__transfers {
+    grid-column-start: 7;
+    grid-column-end: 13;
+
+    grid-row-start: 1;
+    grid-row-end: 3;
+  }
+
+  .exchange__transactions {
+    grid-column-start: 1;
+    grid-column-end: 7;
+  }
+
+  .exchange__trades {
+    grid-column-start: 7;
+    grid-column-end: 13;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .exchange__header--brand {
+    grid-column-start: 1;
+    grid-column-end: 5;
+  }
+
+  .exchange__header--networks {
+    grid-column-start: 5;
+    grid-column-end: 7;
+  }
+
+  .exchange__markets {
+    grid-column-start: 2;
+    grid-column-end: 6;
+
+    grid-row-start: 1;
+    grid-row-end: 3;
+  }
+
+  .exchange__orders {
+    grid-column-start: 2;
+    grid-column-end: 6;
+
+    grid-row-start: 2;
+    grid-row-end: 3;
+  }
+
+  .exchange__transfers {
+    grid-column-start: 7;
+    grid-column-end: 12;
+
+    grid-row-start: 1;
+    grid-row-end: 3;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .exchange__header--brand {
+    background: var(--clr-secondary);
+  }
+
+  .exchange__section--left {
+    padding: 0.25em 2em 0;
+
+    grid-column-start: 1;
+    grid-column-end: 5;
+  }
+
+  .exchange__section--right {
+    grid-column-start: 5;
+    grid-column-end: 13;
+  }
+
+  .exchange__markets,
+  .exchange__transfers,
+  .exchange__orders {
+    grid-column-start: 1;
+    grid-column-end: 13;
+  }
+
+  .exchange__markets {
+    grid-row: 1;
+  }
+
+  .exchange__transfers {
+    grid-row: 2;
+  }
+
+  .exchange__orders {
+    grid-row: 3;
+  }
+}
+
+@media screen and (min-width: 1400px) {}
+
+@media screen and (min-width: 1600px) {
+  .exchange__section--left {
+    grid-column-start: 1;
+    grid-column-end: 4;
+  }
+
+  .exchange__section--right {
+    grid-column-start: 4;
+    grid-column-end: 13;
+  }
+
+  .exchange__header--brand {
+    grid-column-start: 1;
+    grid-column-end: 4;
+  }
+
+  .exchange__header--networks {
+    grid-column-start: 4;
+    grid-column-end: 5;
+  }
+}
