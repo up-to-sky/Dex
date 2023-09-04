@@ -52,11 +52,12 @@ const Order = () => {
     setAmount(0);
     setPrice(0);
   };
+  
   // JSX
   return (
     <div className="component exchange__orders">
       <div className='component__header flex-between'>
-        <h2>New Order</h2>
+        <h2>Order</h2>
         <div className='tabs'>
           <button onClick={tabHandler} ref={buyRef} className='tab tab--active'>Buy</button>
           <button onClick={tabHandler} ref={sellRef} className='tab'>Sell</button>

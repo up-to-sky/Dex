@@ -110,7 +110,7 @@ The `config.json` file in the repository contains the following components:
 
 ### Ethereum Mainnet (11155111):
 
-- **Explorer URL:** Mainnet explorer URL: `https://sepolia.etherscan.io/`
+- **Explorer URL:** Sepolia testnet explorer URL: `https://sepolia.etherscan.io/`
 
 ### Goerli Testnet (5):
 

@@ -1,5 +1,7 @@
-// Import necessary modules and components
+// Importing React hooks for managing component state and side effects
 import { useEffect, useState, useRef } from 'react';
+
+// Importing Redux hooks for connecting to the Redux store
 import { useDispatch, useSelector } from 'react-redux';
 
 // Import images for different tokens
@@ -101,8 +103,8 @@ const Balance = () => {
       <div className='exchange__transfers--form'>
         <div className='flex-between'>
           <p><small>Token</small><br /><img src={cadex} alt="Token Logo" />CADEX</p>
-          <p><small>Wallet</small><br />{tokenBalances && tokenBalances[0]}</p>
           <p><small>Exchange</small><br />{exchangeBalances && exchangeBalances[0]}</p>
+          <p><small>Wallet</small><br />{tokenBalances && tokenBalances[0]}</p>
         </div>
 
         <form onSubmit={isDeposit ? (e) => depositHandler(e, tokens[0]) : (e) => withdrawHandler(e, tokens[0])}>
@@ -131,8 +133,8 @@ const Balance = () => {
       <div className='exchange__transfers--form'>
         <div className='flex-between'>
           <p><small>Token</small><br /><img src={symbols[1] === 'USDC' ? usdc : dai} alt="Token Logo" />{symbols && symbols[1]}</p>
-          <p><small>Wallet</small><br />{tokenBalances && tokenBalances[1]}</p>
           <p><small>Exchange</small><br />{exchangeBalances && exchangeBalances[1]}</p>
+          <p><small>Wallet</small><br />{tokenBalances && tokenBalances[1]}</p>
         </div>
 
         <form onSubmit={isDeposit ? (e) => depositHandler(e, tokens[1]) : (e) => withdrawHandler(e, tokens[1])}>

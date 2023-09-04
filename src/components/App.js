@@ -1,7 +1,12 @@
-// Import necessary dependencies
+// Import the useEffect hook from the 'react' library
 import { useEffect } from 'react';
+
+// Import the useDispatch function from 'react-redux' for managing Redux actions
 import { useDispatch } from 'react-redux';
+
+// Import configuration data from the 'config.json' file
 import config from '../config.json';
+
 
 // Import Redux actions and components
 import {
@@ -18,6 +23,7 @@ import Markets from './Markets';
 import Balance from './Balance';
 import Order from './Order';
 import PriceChart from './PriceChart';
+import Trades from './Trades';
 import OrderBook from './OrderBook';
 
 // Main App component
@@ -86,9 +92,9 @@ function App() {
 
           {/* Transactions */}
 
-          {/* Trades */}
+          <Trades />
 
-          <OrderBook/>
+          <OrderBook />
 
         </section>
       </main>

@@ -24,6 +24,7 @@ const PriceChart = () => {
   const symbols = useSelector(state => state.tokens.symbols);
   const priceChart = useSelector(priceChartSelector);
 
+  // JSX
   return (
     <div className="component exchange__chart">
       <div className='component__header flex-between'>

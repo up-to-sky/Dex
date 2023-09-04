@@ -12,6 +12,7 @@ const OrderBook = () => {
   const symbols = useSelector(state => state.tokens.symbols);
   const orderBook = useSelector(orderBookSelector);
 
+  // JSX
   return (
     <div className="component exchange__orderbook">
       <div className='component__header flex-between'>
@@ -29,7 +30,7 @@ const OrderBook = () => {
             <thead>
               <tr>
                 <th>{symbols && symbols[0]}<img src={sort} alt="Sort" /></th>
-                <th>{symbols && symbols[0]}-{symbols && symbols[1]}<img src={sort} alt="Sort" /></th>
+                <th>Buy Price<img src={sort} alt="Sort" /></th>
                 <th>{symbols && symbols[1]}<img src={sort} alt="Sort" /></th>
               </tr>
             </thead>
@@ -59,7 +60,7 @@ const OrderBook = () => {
             <thead>
               <tr>
                 <th>{symbols && symbols[0]}<img src={sort} alt="Sort" /></th>
-                <th>{symbols && symbols[0]}/{symbols && symbols[1]}<img src={sort} alt="Sort" /></th>
+                <th>Sell Price<img src={sort} alt="Sort" /></th>
                 <th>{symbols && symbols[1]}<img src={sort} alt="Sort" /></th>
               </tr>
             </thead>
