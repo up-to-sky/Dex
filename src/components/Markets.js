@@ -27,14 +27,14 @@ const Markets = () => {
   return (
     <div className='component exchange__markets'>
       <div className='component__header'>
-        <h2>Select Trading Pairs</h2>
+        <h2>Trading Pairs</h2>
       </div>
 
       {/* Check if chainId is available and corresponds to config */}
       {chainId && config[chainId] ? (
         <select name="markets" id="markets" onChange={marketHandler}>
-          <option value={`${config[chainId].cadex.address},${config[chainId].usdc.address}`}>CADEX / USDC</option>
-          <option value={`${config[chainId].cadex.address},${config[chainId].dai.address}`}>CADEX / DAI</option>
+          <option value={`${config[chainId].cadex.address},${config[chainId].usdc.address}`}>CADEX/USDC</option>
+          <option value={`${config[chainId].cadex.address},${config[chainId].dai.address}`}>CADEX/DAI</option>
         </select>
       ) : (
         <div>

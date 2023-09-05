@@ -4,7 +4,7 @@ import TOKEN_ABI from '../abis/Token.json';
 import EXCHANGE_ABI from '../abis/Exchange.json';
 
 // ---------------------------------------------------------------------
-// Connection and Network Functions
+// Connection and Network 
 // ---------------------------------------------------------------------
 
 // Load the Ethereum provider and dispatch the connection
@@ -24,7 +24,7 @@ export const loadNetwork = async (provider, dispatch) => {
 };
 
 // ---------------------------------------------------------------------------------
-// Account Functions
+// Account 
 // ---------------------------------------------------------------------------------
 
 // Load the user's Ethereum account and dispatch it, along with the ether balance
@@ -43,7 +43,7 @@ export const loadAccount = async (provider, dispatch) => {
 };
 
 // ------------------------------------------------------------------------------------------------
-// Token and Exchange Loading Functions
+// Token and Exchange Loading 
 // ------------------------------------------------------------------------------------------------
 
 // Load ERC20 tokens and dispatch their information
@@ -71,6 +71,11 @@ export const loadExchange = async (provider, address, dispatch) => {
 
 // Subscribe to events emitted by the Exchange contract and dispatch relevant actions
 export const subscribeToEvents = (exchange, dispatch) => {
+  exchange.on('Cancel', (id, user, tokenGet, amountGet, tokenGive, amountGive, timestamp, event) => {
+    const order = event.args;
+    dispatch({ type: 'ORDER_CANCEL_SUCCESS', order, event });
+  });
+
   exchange.on('Deposit', (token, user, amount, balance, event) => {
     dispatch({ type: 'TRANSFER_SUCCESS', event });
   });
@@ -78,7 +83,7 @@ export const subscribeToEvents = (exchange, dispatch) => {
   exchange.on('Withdraw', (token, user, amount, balance, event) => {
     dispatch({ type: 'WITHDRAW_SUCCESS', event });
   });
-  
+
   exchange.on('Order', (id, user, tokenGet, amountGet, tokenGive, amountGive, timestamp, event) => {
     const order = event.args;
     dispatch({ type: 'NEW_ORDER_SUCCESS', order, event });
@@ -86,7 +91,7 @@ export const subscribeToEvents = (exchange, dispatch) => {
 };
 
 // ---------------------------------------------------------------------------------------------------
-// Balance Loading and Transfer Functions
+// Balance Loading and Transfer 
 // ---------------------------------------------------------------------------------------------------
 
 // Load user balances (wallet and exchange) and dispatch them
@@ -133,7 +138,9 @@ export const transferTokens = async (provider, exchange, transferType, token, am
 // Load all orders
 // -------------------------------------------------------------------
 
+// This function loads all orders asynchronously.
 export const loadAllOrders = async (provider, exchange, dispatch) => {
+  // Get the current block number from the provider.
   const block = await provider.getBlockNumber();
 
   // Fetch canceled orders
@@ -156,7 +163,7 @@ export const loadAllOrders = async (provider, exchange, dispatch) => {
 }
 
 // ----------------------------------------------------------------------------------------------------------
-// Orders (Buy & Sell) Functions
+// Orders (Buy & Sell) 
 // ----------------------------------------------------------------------------------------------------------
 
 // Create a buy order and dispatch relevant actions
@@ -194,3 +201,20 @@ export const makeSellOrder = async (provider, exchange, tokens, order, dispatch)
     dispatch({ type: 'NEW_ORDER_FAIL' });
   }
 };
+
+// -----------------------------------------------------------------------
+// Cancel Order 
+// ------------------------------------------------------------------------
+
+// Cancel an existing order and dispatch relevant actions
+export const cancelOrder = async (provider, exchange, order, dispatch) => {
+  dispatch({ type: 'ORDER_CANCEL_REQUEST' });
+
+  try {
+    const signer = await provider.getSigner();
+    const transaction = await exchange.connect(signer).cancelOrder(order.id);
+    await transaction.wait();
+  } catch (error) {
+    dispatch({ type: 'ORDER_CANCEL_FAIL' });
+  }
+}

@@ -31,7 +31,7 @@ const DEFAULT_TOKENS_STATE = {
   loaded: false,
   contracts: [],
   symbols: [],
-  balances: [] // Added balances property
+  balances: [] 
 };
 
 // Reducer for token-related actions
@@ -78,7 +78,7 @@ const DEFAULT_EXCHANGE_STATE = {
     data: []
   },
   events: [],
-  balances: [] // Added balances property
+  balances: [] 
 };
 
 // Reducer for exchange-related actions
@@ -124,9 +124,53 @@ export const exchange = (state = DEFAULT_EXCHANGE_STATE, action) => {
         }
       };
 
-  // ------------------------------------------------
-  // Balance Cases
-  // ------------------------------------------------
+// ---------------------------------------------
+// Cancelling Orders
+// ---------------------------------------------
+
+    case 'ORDER_CANCEL_REQUEST':
+      return {
+        ...state,
+        transaction: {
+          transactionType: 'Cancel',
+          isPending: true,
+          isSuccessful: false
+        }
+      }
+
+    case 'ORDER_CANCEL_SUCCESS':
+      return {
+        ...state,
+        transaction: {
+          transactionType: 'Cancel',
+          isPending: false,
+          isSuccessful: true
+        },
+        cancelledOrders: {
+          ...state.cancelledOrders,
+          data: [
+            ...state.cancelledOrders.data,
+            action.order
+          ]
+        },
+        events: [action.event, ...state.events]
+      }
+
+    case 'ORDER_CANCEL_FAIL':
+      return {
+        ...state,
+        transaction: {
+          transactionType: 'Cancel',
+          isPending: false,
+          isSuccessful: false,
+          isError: true
+        }
+      }
+
+
+// --------------------------------------------------
+// Balance Cases
+// --------------------------------------------------
 
     case 'EXCHANGE_TOKEN_1_BALANCE_LOADED':
       return {
@@ -139,9 +183,9 @@ export const exchange = (state = DEFAULT_EXCHANGE_STATE, action) => {
         balances: [...state.balances, action.balance] 
       };
 
-  // -------------------------------------------
-  // Transfer Cases (Deposits & Withdraws)
-  // -------------------------------------------
+// ----------------------------------------------
+// Transfer Cases (Deposits & Withdraws)
+// ----------------------------------------------
 
     case 'TRANSFER_PENDING':
       return {
@@ -176,9 +220,9 @@ export const exchange = (state = DEFAULT_EXCHANGE_STATE, action) => {
         transferInProgress: false
       };
 
-    // ----------------------------------------------------------------------------------------------------
-    // Making Orders Cases
-    // ----------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------
+// Making Orders Cases
+// --------------------------------------------------------------------------------------------------------
 
     case 'NEW_ORDER_REQUEST':
       return {

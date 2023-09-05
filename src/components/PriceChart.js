@@ -30,12 +30,10 @@ const PriceChart = () => {
       <div className='component__header flex-between'>
         <div className='flex'>
           {/* Display trading pair */}
-          <h2>{symbols && `${symbols[0]} / ${symbols[1]}`}</h2> &nbsp; &nbsp;
+          <h2>{symbols && `${symbols[0]}/${symbols[1]}`}</h2> &nbsp; &nbsp;
 
           {priceChart && (
             <div className='flex'>
-              {/* Display last price */}
-              <span className='up'>{priceChart.lastPrice}</span>
 
               {/* Display arrow icon based on price change */} &nbsp; 
               {priceChart.lastPriceChange === '+' ? (
@@ -43,6 +41,9 @@ const PriceChart = () => {
               ): (
                 <img src={arrowDown} alt="Arrow down" /> 
               )}
+
+              {/* Display last price */}
+              <span className='up'>{priceChart.lastPrice}</span>
             </div>
           )}
         </div>

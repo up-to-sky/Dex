@@ -10,7 +10,6 @@ import moment from 'moment';
 // Importing the 'ethers' module from the 'ethers' library for Ethereum-related operations
 import { ethers } from 'ethers';
 
-
 // Colors for order types
 const GREEN = '#25CE8F'
 const RED = '#F45353'
@@ -19,8 +18,8 @@ const RED = '#F45353'
 const account = state => get(state, 'provider.account')
 const tokens = state => get(state, 'tokens.contracts')
 const allOrders = state => get(state, 'exchange.allOrders.data', [])
-const cancelledOrders = state => get(state, 'exchange.cancelledOrders.data', [])
 const filledOrders = state => get(state, 'exchange.filledOrders.data', [])
+const cancelledOrders = state => get(state, 'exchange.cancelledOrders.data', [])
 
 // Select open orders that are neither filled nor cancelled
 const openOrders = state => {
@@ -35,33 +34,6 @@ const openOrders = state => {
   })
 
   return openOrders
-}
-
-// Decorate an order with additional information
-const decorateOrder = (order, tokens) => {
-  let token0Amount, token1Amount
-
-  // Determine token amounts based on order type
-  if (order.tokenGive === tokens[1].address) {
-    token0Amount = order.amountGive
-    token1Amount = order.amountGet
-  } else {
-    token0Amount = order.amountGet
-    token1Amount = order.amountGive
-  }
-
-  // Calculate token price
-  const precision = 100000
-  let tokenPrice = token1Amount / token0Amount
-  tokenPrice = Math.round(tokenPrice * precision) / precision
-
-  return {
-    ...order,
-    token1Amount: ethers.utils.formatUnits(token1Amount, "ether"),
-    token0Amount: ethers.utils.formatUnits(token0Amount, "ether"),
-    tokenPrice,
-    formattedTimestamp: moment.unix(order.timestamp).format('h:mm:ssa D MMM')
-  }
 }
 
 // ------------------------------------------------------------------------------------------------------
@@ -120,7 +92,7 @@ const decorateOrder = (order, tokens) => {
   let token0Amount, token1Amount;
 
   // Note: CADEX should be considered token0, USDC is considered token1
-  // Example: Giving USDC in exchange for DApp
+  // Example: Giving USDC in exchange for CADEX
   if (order.tokenGive === tokens[1].address) {
     token0Amount = order.amountGive; // The amount of CADEX we are giving
     token1Amount = order.amountGet; // The amount of USDC we want...
@@ -205,11 +177,66 @@ const tokenPriceClass = (tokenPrice, orderId, previousOrder) => {
   // Show green price if order price is higher than previous order
   // Show red price if order price is lower than previous order
   if (previousOrder.tokenPrice <= tokenPrice) {
-    return GREEN; 
+    return GREEN; // Success
   } else {
-    return RED; 
+    return RED; // Danger
   }
 };
+
+// ------------------------------------------------------------------------------------------------------
+// My Filled Orders
+// ------------------------------------------------------------------------------------------------------
+
+export const myFilledOrdersSelector = createSelector(
+    account,
+    tokens,
+    filledOrders,
+    (account, tokens, orders) => {
+      if (!tokens[0] || !tokens[1]) { return }
+
+      // Find our orders
+      orders = orders.filter((o) => o.user === account || o.creator === account)
+      // Filter orders for current trading pair
+      orders = orders.filter((o) => o.tokenGet === tokens[0].address || o.tokenGet === tokens[1].address)
+      orders = orders.filter((o) => o.tokenGive === tokens[0].address || o.tokenGive === tokens[1].address)
+
+      // Sort by date descending
+      orders = orders.sort((a, b) => b.timestamp - a.timestamp)
+
+      // Decorate orders - add display attributes
+      orders = decorateMyFilledOrders(orders, account, tokens)
+
+      return orders
+  }
+)
+
+const decorateMyFilledOrders = (orders, account, tokens) => {
+  return(
+    orders.map((order) => {
+      order = decorateOrder(order, tokens)
+      order = decorateMyFilledOrder(order, account, tokens)
+      return(order)
+    })
+  )
+}
+
+const decorateMyFilledOrder = (order, account, tokens) => {
+  const myOrder = order.creator === account
+
+  let orderType
+  if(myOrder) {
+    orderType = order.tokenGive === tokens[1].address ? 'buy' : 'sell'
+  } else {
+    orderType = order.tokenGive === tokens[1].address ? 'sell' : 'buy'
+  }
+
+  return({
+    ...order,
+    orderType,
+    orderClass: (orderType === 'buy' ? GREEN : RED),
+    orderSign: (orderType === 'buy' ? '+' : '-')
+  })
+}
 
 // ------------------------------------------------------------------------------------------------------
 // Order Book

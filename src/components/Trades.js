@@ -21,7 +21,7 @@ const Trades = () => {
   return (
     <div className="component exchange__trades">
       <div className='component__header flex-between'>
-        <h2>Filled Trades</h2>
+        <h2>Trades</h2>
       </div>
 
       {!filledOrders || filledOrders.length === 0 ? (
