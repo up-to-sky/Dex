@@ -16,6 +16,7 @@ const GREEN = '#25CE8F'
 const RED = '#F45353'
 
 // Selectors for retrieving data from the state
+const account = state => get(state, 'provider.account')
 const tokens = state => get(state, 'tokens.contracts')
 const allOrders = state => get(state, 'exchange.allOrders.data', [])
 const cancelledOrders = state => get(state, 'exchange.cancelledOrders.data', [])
@@ -62,6 +63,85 @@ const decorateOrder = (order, tokens) => {
     formattedTimestamp: moment.unix(order.timestamp).format('h:mm:ssa D MMM')
   }
 }
+
+// ------------------------------------------------------------------------------------------------------
+// My Open Orders
+// ------------------------------------------------------------------------------------------------------
+
+// Selector function to get the user's open orders
+export const myOpenOrdersSelector = createSelector(
+  account,
+  tokens,
+  openOrders,
+  (account, tokens, orders) => {
+    if (!tokens[0] || !tokens[1]) {
+      return; // Return early if tokens are not available
+    }
+
+    // Filter orders created by the current account
+    orders = orders.filter((o) => o.user === account);
+
+    // Filter orders by token addresses
+    orders = orders.filter((o) => o.tokenGet === tokens[0].address || o.tokenGet === tokens[1].address);
+    orders = orders.filter((o) => o.tokenGive === tokens[0].address || o.tokenGive === tokens[1].address);
+
+    // Decorate orders - add display attributes
+    orders = decorateMyOpenOrders(orders, tokens);
+
+    // Sort orders by date descending
+    orders = orders.sort((a, b) => b.timestamp - a.timestamp);
+
+    return orders;
+  }
+);
+
+// Function to decorate the user's open orders with additional attributes
+const decorateMyOpenOrders = (orders, tokens) => {
+  return orders.map((order) => {
+    order = decorateOrder(order, tokens);
+    order = decorateMyOpenOrder(order, tokens);
+    return order;
+  });
+};
+
+// Function to decorate a single open order with order type and order type class
+const decorateMyOpenOrder = (order, tokens) => {
+  let orderType = order.tokenGive === tokens[1].address ? 'buy' : 'sell';
+
+  return {
+    ...order,
+    orderType,
+    orderTypeClass: orderType === 'buy' ? GREEN : RED, 
+  };
+};
+
+// Function to decorate a single order with token amounts, token price, and formatted timestamp
+const decorateOrder = (order, tokens) => {
+  let token0Amount, token1Amount;
+
+  // Note: CADEX should be considered token0, USDC is considered token1
+  // Example: Giving USDC in exchange for DApp
+  if (order.tokenGive === tokens[1].address) {
+    token0Amount = order.amountGive; // The amount of CADEX we are giving
+    token1Amount = order.amountGet; // The amount of USDC we want...
+  } else {
+    token0Amount = order.amountGet; // The amount of CADEX we want
+    token1Amount = order.amountGive; // The amount of USDC we are giving...
+  }
+
+  // Calculate token price to 5 decimal places
+  const precision = 100000;
+  let tokenPrice = token1Amount / token0Amount;
+  tokenPrice = Math.round(tokenPrice * precision) / precision;
+
+  return {
+    ...order,
+    token1Amount: ethers.utils.formatUnits(token1Amount, 'ether'), 
+    token0Amount: ethers.utils.formatUnits(token0Amount, 'ether'), 
+    tokenPrice,
+    formattedTimestamp: moment.unix(order.timestamp).format('h:mm:ssa d MMM D'), 
+  };
+};
 
 // ------------------------------------------------------------------------------------------------------
 // All Filled Orders
