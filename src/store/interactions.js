@@ -1,11 +1,14 @@
-// Import necessary libraries and ABIs
+// ------------------------------------------------------------------------------------------------------------
+// Import Necessary Libraries & ABIs
+// ------------------------------------------------------------------------------------------------------------
+
 import { ethers } from 'ethers';
 import TOKEN_ABI from '../abis/Token.json';
 import EXCHANGE_ABI from '../abis/Exchange.json';
 
-// ---------------------------------------------------------------------
-// Connection and Network 
-// ---------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------
+// Connection & Network
+// ------------------------------------------------------------------------------------------------------------
 
 // Load the Ethereum provider and dispatch the connection
 export const loadProvider = (dispatch) => {
@@ -23,9 +26,9 @@ export const loadNetwork = async (provider, dispatch) => {
   return chainId;
 };
 
-// ---------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------
 // Account 
-// ---------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------
 
 // Load the user's Ethereum account and dispatch it, along with the ether balance
 export const loadAccount = async (provider, dispatch) => {
@@ -42,9 +45,9 @@ export const loadAccount = async (provider, dispatch) => {
   return account;
 };
 
-// ------------------------------------------------------------------------------------------------
-// Token and Exchange Loading 
-// ------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------
+// Token & Exchange Loading 
+// ------------------------------------------------------------------------------------------------------------
 
 // Load ERC20 tokens and dispatch their information
 export const loadTokens = async (provider, addresses, dispatch) => {
@@ -71,6 +74,11 @@ export const loadExchange = async (provider, address, dispatch) => {
 
 // Subscribe to events emitted by the Exchange contract and dispatch relevant actions
 export const subscribeToEvents = (exchange, dispatch) => {
+  exchange.on('Trade', (id, user, tokenGet, amountGet, tokenGive, amountGive, creator, timestamp, event) => {
+    const order = event.args
+    dispatch({ type: 'ORDER_FILL_SUCCESS', order, event })
+  });  
+
   exchange.on('Cancel', (id, user, tokenGet, amountGet, tokenGive, amountGive, timestamp, event) => {
     const order = event.args;
     dispatch({ type: 'ORDER_CANCEL_SUCCESS', order, event });
@@ -90,9 +98,9 @@ export const subscribeToEvents = (exchange, dispatch) => {
   });
 };
 
-// ---------------------------------------------------------------------------------------------------
-// Balance Loading and Transfer 
-// ---------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------
+// Balance Loading & Transfer 
+// ------------------------------------------------------------------------------------------------------------
 
 // Load user balances (wallet and exchange) and dispatch them
 export const loadBalances = async (exchange, tokens, account, dispatch) => {
@@ -134,9 +142,9 @@ export const transferTokens = async (provider, exchange, transferType, token, am
   }
 };
 
-// -------------------------------------------------------------------
-// Load all orders
-// -------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------
+// Load All Orders
+// ------------------------------------------------------------------------------------------------------------
 
 // This function loads all orders asynchronously.
 export const loadAllOrders = async (provider, exchange, dispatch) => {
@@ -162,9 +170,9 @@ export const loadAllOrders = async (provider, exchange, dispatch) => {
   dispatch({ type: 'ALL_ORDERS_LOADED', allOrders });
 }
 
-// ----------------------------------------------------------------------------------------------------------
-// Orders (Buy & Sell) 
-// ----------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------
+// Orders (Buy & Sell)
+// ------------------------------------------------------------------------------------------------------------
 
 // Create a buy order and dispatch relevant actions
 export const makeBuyOrder = async (provider, exchange, tokens, order, dispatch) => {
@@ -202,9 +210,9 @@ export const makeSellOrder = async (provider, exchange, tokens, order, dispatch)
   }
 };
 
-// -----------------------------------------------------------------------
-// Cancel Order 
-// ------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------
+// Cancel Orders
+// ------------------------------------------------------------------------------------------------------------
 
 // Cancel an existing order and dispatch relevant actions
 export const cancelOrder = async (provider, exchange, order, dispatch) => {
@@ -216,5 +224,21 @@ export const cancelOrder = async (provider, exchange, order, dispatch) => {
     await transaction.wait();
   } catch (error) {
     dispatch({ type: 'ORDER_CANCEL_FAIL' });
+  }
+}
+
+// ------------------------------------------------------------------------------------------------------------
+// Fill Orders
+// ------------------------------------------------------------------------------------------------------------
+
+export const fillOrder = async (provider, exchange, order, dispatch) => {
+  dispatch({ type: 'ORDER_FILL_REQUEST' })
+
+  try {
+    const signer = await provider.getSigner()
+    const transaction = await exchange.connect(signer).fillOrder(order.id)
+    await transaction.wait()
+  } catch (error) {
+    dispatch({ type: 'ORDER_FILL_FAIL' })
   }
 }

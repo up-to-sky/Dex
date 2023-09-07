@@ -1,18 +1,37 @@
-// Import the `useSelector` hook from the 'react-redux' library
-import { useSelector } from 'react-redux';
+// ----------------------------------------------------------------------------------------------
+// Import Nececessary Hooks & Components
+// ----------------------------------------------------------------------------------------------
 
-// Import Assets
-import sort from '../assets/sort.svg';
+import { useDispatch, useSelector } from 'react-redux'; 
+import { orderBookSelector } from '../store/selectors'; 
+import { fillOrder } from '../store/interactions'; 
+import sort from '../assets/sort.svg'; 
 
-// Import Selectors
-import { orderBookSelector } from '../store/selectors';
+// ----------------------------------------------------------------------------------------------
+// Define The OrderBook Components
+// ----------------------------------------------------------------------------------------------
 
 const OrderBook = () => {
-  // Redux state selectors
+  // Access data from the Redux store using useSelector
+  const provider = useSelector(state => state.provider.connection);
+  const exchange = useSelector(state => state.exchange.contract);
   const symbols = useSelector(state => state.tokens.symbols);
   const orderBook = useSelector(orderBookSelector);
 
-  // JSX
+  const dispatch = useDispatch(); // Get the dispatch function
+
+// ----------------------------------------------------------------------------------------------
+// Handler Function For Filling An Order
+// ----------------------------------------------------------------------------------------------
+
+  const fillOrderHandler = (order) => {
+    fillOrder(provider, exchange, order, dispatch);
+  }  
+
+// ----------------------------------------------------------------------------------------------
+// JSX For Rendering The Components
+// ----------------------------------------------------------------------------------------------
+
   return (
     <div className="component exchange__orderbook">
       <div className='component__header flex-between'>
@@ -37,13 +56,15 @@ const OrderBook = () => {
             <tbody>
 
               {/* Map Buy Orders */}
-              {orderBook.buyOrders.map((order, index) => (
-                <tr key={index}>
-                  <td>{order.token0Amount}</td>
-                  <td style={{ color: `${order.orderTypeClass}` }}>{order.tokenPrice}</td>
-                  <td>{order.token1Amount}</td>
-                </tr>
-              ))}
+              {orderBook && orderBook.buyOrders.map((order, index) => {
+                return (
+                  <tr key={index} onClick={() => fillOrderHandler(order)}>
+                    <td>{order.token0Amount}</td>
+                    <td style={{ color: `${order.orderTypeClass}` }}>{order.tokenPrice}</td>
+                    <td>{order.token1Amount}</td>
+                  </tr>
+                  )
+                })}
 
             </tbody>
           </table>
@@ -67,13 +88,15 @@ const OrderBook = () => {
             <tbody>
 
               {/* Map Sell Orders */}
-              {orderBook.sellOrders.map((order, index) => (
-                <tr key={index}>
+              {orderBook && orderBook.sellOrders.map((order, index) => {
+                return(
+                <tr key={index} onClick={() => fillOrderHandler(order)}>
                   <td>{order.token0Amount}</td>
                   <td style={{ color: `${order.orderTypeClass}` }}>{order.tokenPrice}</td>
                   <td>{order.token1Amount}</td>
                 </tr>
-              ))}
+                )
+              })}
 
             </tbody>
           </table>

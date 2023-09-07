@@ -1,4 +1,7 @@
-// Reducer for provider-related actions
+// ----------------------------------------------------------------------------------------------------------
+// Reducer For Provider-Related Actions
+// ----------------------------------------------------------------------------------------------------------
+
 export const provider = (state = {}, action) => {
   switch (action.type) {
     case 'PROVIDER_LOADED':
@@ -26,7 +29,10 @@ export const provider = (state = {}, action) => {
   }
 };
 
-// Default state for token-related actions
+// ----------------------------------------------------------------------------------------------------------
+// Default State For Token-Related Actions
+// ----------------------------------------------------------------------------------------------------------
+
 const DEFAULT_TOKENS_STATE = {
   loaded: false,
   contracts: [],
@@ -34,7 +40,10 @@ const DEFAULT_TOKENS_STATE = {
   balances: [] 
 };
 
-// Reducer for token-related actions
+// ----------------------------------------------------------------------------------------------------------
+// Reducer For Token-Related Actions
+// ----------------------------------------------------------------------------------------------------------
+
 export const tokens = (state = DEFAULT_TOKENS_STATE, action) => {
   switch (action.type) {
     case 'TOKEN_1_LOADED':
@@ -66,7 +75,10 @@ export const tokens = (state = DEFAULT_TOKENS_STATE, action) => {
   }
 };
 
-// Default state for exchange-related actions
+// ----------------------------------------------------------------------------------------------------------
+// Default State For Exchange-Related Actions
+// ----------------------------------------------------------------------------------------------------------
+
 const DEFAULT_EXCHANGE_STATE = {
   loaded: false,
   contract: {},
@@ -77,11 +89,20 @@ const DEFAULT_EXCHANGE_STATE = {
     loaded: false,
     data: []
   },
+  cancelledOrders: {
+    data: []
+  },
+  filledOrders: {
+    data: []
+  },
   events: [],
   balances: [] 
 };
 
-// Reducer for exchange-related actions
+// ----------------------------------------------------------------------------------------------------------
+// Reducer For Exchange-Related Actions
+// ----------------------------------------------------------------------------------------------------------
+
 export const exchange = (state = DEFAULT_EXCHANGE_STATE, action) => {
   let index, data;
 
@@ -93,9 +114,9 @@ export const exchange = (state = DEFAULT_EXCHANGE_STATE, action) => {
         contract: action.exchange
       };
 
-// -----------------------------------
-// Order loaded
-// -----------------------------------
+// ----------------------------------------------------------------------------------------------------------
+// Order Loaded
+// ----------------------------------------------------------------------------------------------------------
 
     case 'CANCELLED_ORDERS_LOADED':
       return {
@@ -124,9 +145,58 @@ export const exchange = (state = DEFAULT_EXCHANGE_STATE, action) => {
         }
       };
 
-// ---------------------------------------------
+// ----------------------------------------------------------------------------------------------------------
+// Filling Orders
+// ----------------------------------------------------------------------------------------------------------
+
+    case 'ORDER_FILL_REQUEST':
+      return {
+        ...state,
+        transaction: {
+          transactionType: "Fill Order",
+          isPending: true,
+          isSuccessful: false
+        }
+      }
+
+    case 'ORDER_FILL_SUCCESS':
+      // Prevent duplicate orders
+      index = state.filledOrders.data.findIndex(order => order.id.toString() === action.order.id.toString())
+
+      if (index === -1) {
+        data = [...state.filledOrders.data, action.order]
+      } else {
+        data = state.filledOrders.data
+      }
+
+      return {
+        ...state,
+        transaction: {
+          transactionType: "Fill Order",
+          isPending: false,
+          isSuccessful: true
+        },
+        filledOrders: {
+          ...state.filledOrders,
+          data
+        },
+        events: [action.event, ...state.events]
+      }
+
+    case 'ORDER_FILL_FAIL':
+      return {
+        ...state,
+        transaction: {
+          transactionType: "Fill Order",
+          isPending: false,
+          isSuccessful: false,
+          isError: true
+        }
+      }
+
+// ----------------------------------------------------------------------------------------------------------
 // Cancelling Orders
-// ---------------------------------------------
+// ----------------------------------------------------------------------------------------------------------
 
     case 'ORDER_CANCEL_REQUEST':
       return {
@@ -168,9 +238,9 @@ export const exchange = (state = DEFAULT_EXCHANGE_STATE, action) => {
       }
 
 
-// --------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------
 // Balance Cases
-// --------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------
 
     case 'EXCHANGE_TOKEN_1_BALANCE_LOADED':
       return {
@@ -183,9 +253,9 @@ export const exchange = (state = DEFAULT_EXCHANGE_STATE, action) => {
         balances: [...state.balances, action.balance] 
       };
 
-// ----------------------------------------------
+// ----------------------------------------------------------------------------------------------------------
 // Transfer Cases (Deposits & Withdraws)
-// ----------------------------------------------
+// ----------------------------------------------------------------------------------------------------------
 
     case 'TRANSFER_PENDING':
       return {
@@ -220,9 +290,9 @@ export const exchange = (state = DEFAULT_EXCHANGE_STATE, action) => {
         transferInProgress: false
       };
 
-// --------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------
 // Making Orders Cases
-// --------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------
 
     case 'NEW_ORDER_REQUEST':
       return {
