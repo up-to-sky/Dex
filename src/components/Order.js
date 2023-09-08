@@ -1,11 +1,14 @@
-// Import React hooks for managing component state and references
+// ------------------------------------------------------------------------------------------
+// Import Nececessary Hooks & Components
+// ------------------------------------------------------------------------------------------
+
 import { useState, useRef } from 'react';
-
-// Import Redux hooks for accessing the store and dispatching actions
 import { useDispatch, useSelector } from 'react-redux';
-
-// Import custom functions for making buy and sell orders from the interactions module
 import { makeBuyOrder, makeSellOrder } from '../store/interactions';
+
+// ------------------------------------------------------------------------------------------
+// Define The Order Components
+// ------------------------------------------------------------------------------------------
 
 const Order = () => {
   // State variables
@@ -19,6 +22,10 @@ const Order = () => {
   const exchange = useSelector(state => state.exchange.contract);
 
   const dispatch = useDispatch();
+
+// ------------------------------------------------------------------------------------------
+// Define A Function To Handle Tab Button Clicks
+// ------------------------------------------------------------------------------------------
 
   // Refs for tabs
   const buyRef = useRef(null);
@@ -37,7 +44,10 @@ const Order = () => {
     }
   };
 
-  // Handler for Buy Order submission
+// ------------------------------------------------------------------------------------------
+// Handler for Buy & Sell Order Submission
+// ------------------------------------------------------------------------------------------
+
   const buyHandler = (e) => {
     e.preventDefault();
     makeBuyOrder(provider, exchange, tokens, { amount, price }, dispatch);
@@ -45,7 +55,6 @@ const Order = () => {
     setPrice(0);
   };
 
-  // Handler for Sell Order submission
   const sellHandler = (e) => {
     e.preventDefault();
     makeSellOrder(provider, exchange, tokens, { amount, price }, dispatch);
@@ -53,7 +62,10 @@ const Order = () => {
     setPrice(0);
   };
   
-  // JSX
+// ------------------------------------------------------------------------------------------
+// JSX For Rendering The Components
+// ------------------------------------------------------------------------------------------
+
   return (
     <div className="component exchange__orders">
       <div className='component__header flex-between'>

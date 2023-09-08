@@ -1,18 +1,18 @@
-// -----------------------------------------------------------------------
+// ----------------------------------------------------------------------
 // Import Necessary Hooks & Components
-// -----------------------------------------------------------------------
+// ----------------------------------------------------------------------
 
-import { useSelector } from 'react-redux';
-import { priceChartSelector } from '../store/selectors'; 
-import { options, defaultSeries } from './PriceChart.config'; 
 import Chart from 'react-apexcharts'; 
 import Banner from './Banner'; 
 import arrowUp from '../assets/upArrow.png';
 import arrowDown from '../assets/downArrow.png'; 
+import { useSelector } from 'react-redux';
+import { priceChartSelector } from '../store/selectors'; 
+import { options, defaultSeries } from './PriceChart.config'; 
 
-// -----------------------------------------------------------------------
+// ----------------------------------------------------------------------
 // Define The PriceChart Components
-// -----------------------------------------------------------------------
+// ----------------------------------------------------------------------
 
 const PriceChart = () => {
   // Retrieve data from the Redux store
@@ -20,9 +20,9 @@ const PriceChart = () => {
   const symbols = useSelector((state) => state.tokens.symbols);
   const priceChart = useSelector(priceChartSelector);
 
-// -----------------------------------------------------------------------
+// ----------------------------------------------------------------------
 // JSX For Rendering The Components
-// -----------------------------------------------------------------------
+// ----------------------------------------------------------------------
 
   return (
     <div className="component exchange__chart">

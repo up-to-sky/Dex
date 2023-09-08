@@ -1,14 +1,15 @@
-// Importing the `useSelector` hook from the 'react-redux' library.
-import { useSelector } from 'react-redux';
+// --------------------------------------------------------------------------------------------
+// Import Nececessary Hooks & Components
+// --------------------------------------------------------------------------------------------
 
-// Importing the 'sort' image from the '../assets' directory.
 import sort from '../assets/sort.svg';
-
-// Importing the `filledOrdersSelector` function from the '../store/selectors' module.
+import Banner from './Banner';
+import { useSelector } from 'react-redux';
 import { filledOrdersSelector } from '../store/selectors';
 
-// Importing the 'Banner' component from the './Banner' module.
-import Banner from './Banner';
+// --------------------------------------------------------------------------------------------
+// Define The Trades Components
+// --------------------------------------------------------------------------------------------
 
 const Trades = () => {
   // Get symbols from the Redux store
@@ -17,7 +18,10 @@ const Trades = () => {
   // Get filledOrders using the filledOrdersSelector
   const filledOrders = useSelector(filledOrdersSelector);
 
-  // JSX
+// --------------------------------------------------------------------------------------------
+// JSX For Rendering The Components
+// --------------------------------------------------------------------------------------------
+  
   return (
     <div className="component exchange__trades">
       <div className='component__header flex-between'>

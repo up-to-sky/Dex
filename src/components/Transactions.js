@@ -1,25 +1,18 @@
-// Import necessary hooks from the 'react' library
-import { useRef, useState } from 'react';
+// -----------------------------------------------------------------------------------------------------
+// Import Nececessary Hooks & Components
+// -----------------------------------------------------------------------------------------------------
 
-// Import the `useSelector` hook from the 'react-redux' library.
-import { useSelector, useDispatch } from 'react-redux';
-
-// Import the `myOpenOrdersSelector` selector from the '../store/selectors' module.
-import {
-  myOpenOrdersSelector,
-  myFilledOrdersSelector,
-} from '../store/selectors';
-
-// Import the 'sort.svg' file from the '../assets' directory.
 import sort from '../assets/sort.svg';
-
-// Import the `cancelOrder` function from the '../store/interactions' module.
-import { cancelOrder } from '../store/interactions';
-
-// Import the `Banner` component from the './Banner' module.
 import Banner from './Banner';
+import { cancelOrder } from '../store/interactions';
+import { useRef, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { myOpenOrdersSelector, myFilledOrdersSelector } from '../store/selectors';
 
-// Define the Transactions component
+// ----------------------------------------------------------------------------------------------------
+// Define The Transactions Components
+// ----------------------------------------------------------------------------------------------------
+
 const Transactions = () => {
   // State to determine whether to show open orders or my transactions
   const [showMyOrders, setShowMyOrders] = useState(true);
@@ -39,11 +32,15 @@ const Transactions = () => {
 
   const dispatch = useDispatch();
 
+// -----------------------------------------------------------------------------------------------------
+// Define A Function To Handle Tab Button Clicks
+// -----------------------------------------------------------------------------------------------------
+
   // Refs for tab buttons
   const tradeRef = useRef(null);
   const orderRef = useRef(null);
 
-  // Function to handle tab button clicks
+  // Handler for switching between Order and Trade tabs
   const tabHandler = (e) => {
     if (e.target.className !== orderRef.current.className) {
       e.target.className = 'tab tab--active';
@@ -56,13 +53,19 @@ const Transactions = () => {
     }
   };
 
-  // Define a function 'cancelHandler' that takes an 'order' as an argument.
+// ------------------------------------------------------------------------------------------------------
+// Define A Function CancelHandler' That Takes An 'Order' As An Argument.
+// ------------------------------------------------------------------------------------------------------
+
   const cancelHandler = (order) => {
     // Call the 'cancelOrder' function with 'provider', 'exchange', 'order', and 'dispatch' as arguments.
     cancelOrder(provider, exchange, order, dispatch);
   };
 
-  // JSX
+// ------------------------------------------------------------------------------------------------------
+// JSX For Rendering The Components
+// ------------------------------------------------------------------------------------------------------
+
   return (
     <div className="component exchange__transactions">
       {showMyOrders ? (

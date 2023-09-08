@@ -1,25 +1,33 @@
-// Importing createSelector from the 'reselect' library for creating memoized selectors
-import { createSelector } from 'reselect';
+// -------------------------------------------------------------------------------------------------------
+// Import Nececessary Hooks & Components
+// -------------------------------------------------------------------------------------------------------
 
-// Importing specific functions from the 'lodash' library for various utility operations
+import moment from 'moment';
+import { ethers } from 'ethers';
+import { createSelector } from 'reselect';
 import { get, groupBy, reject, maxBy, minBy } from 'lodash';
 
-// Importing the 'moment' library for working with dates and times
-import moment from 'moment';
+// -------------------------------------------------------------------------------------------------------
+// Colors For Order Types
+// -------------------------------------------------------------------------------------------------------
 
-// Importing the 'ethers' module from the 'ethers' library for Ethereum-related operations
-import { ethers } from 'ethers';
-
-// Colors for order types
 const GREEN = '#25CE8F'
 const RED = '#F45353'
 
-// Selectors for retrieving data from the state
+// -------------------------------------------------------------------------------------------------------
+// Selectors For Retrieving Data From The State
+// -------------------------------------------------------------------------------------------------------
+
 const account = state => get(state, 'provider.account')
 const tokens = state => get(state, 'tokens.contracts')
+const events = state => get(state, 'exchange.events')
 const allOrders = state => get(state, 'exchange.allOrders.data', [])
 const filledOrders = state => get(state, 'exchange.filledOrders.data', [])
 const cancelledOrders = state => get(state, 'exchange.cancelledOrders.data', [])
+
+// -------------------------------------------------------------------------------------------------------
+// Define The OpenOrders Components
+// -------------------------------------------------------------------------------------------------------
 
 // Select open orders that are neither filled nor cancelled
 const openOrders = state => {
@@ -37,8 +45,23 @@ const openOrders = state => {
 }
 
 // ------------------------------------------------------------------------------------------------------
-// My Open Orders
+// My Events
 // ------------------------------------------------------------------------------------------------------
+
+export const myEventsSelector = createSelector(
+  account,
+  events,
+  (account, events) => {
+    events = events.filter((e) => e.args.user === account)
+    console.log(events)
+    return events
+  }
+)
+
+
+// -------------------------------------------------------------------------------------------------------
+// My Open Orders
+// -------------------------------------------------------------------------------------------------------
 
 // Selector function to get the user's open orders
 export const myOpenOrdersSelector = createSelector(
@@ -115,9 +138,9 @@ const decorateOrder = (order, tokens) => {
   };
 };
 
-// ------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------
 // All Filled Orders
-// ------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------
 
 // Selector function to filter and decorate filled orders
 export const filledOrdersSelector = createSelector(
@@ -183,9 +206,9 @@ const tokenPriceClass = (tokenPrice, orderId, previousOrder) => {
   }
 };
 
-// ------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------
 // My Filled Orders
-// ------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------
 
 export const myFilledOrdersSelector = createSelector(
     account,
@@ -238,9 +261,9 @@ const decorateMyFilledOrder = (order, account, tokens) => {
   })
 }
 
-// ------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------
 // Order Book
-// ------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------
 
 export const orderBookSelector = createSelector(
   openOrders,
@@ -301,9 +324,9 @@ const decorateOrderBookOrder = (order, tokens) => {
   })
 }
 
-// ------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------
 // Price Chart
-// ------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------
 
 export const priceChartSelector = createSelector(
   filledOrders,
