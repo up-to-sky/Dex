@@ -2,6 +2,18 @@
 
 Welcome to the Canada-DigitalAssets-Exchange repository. This project represents a decentralized exchange designed to operate on the ERC-20 token standard. The core objective of this endeavor is to establish a transparent and secure platform for the seamless trading of digital assets leveraging blockchain technology. As staunch advocates of open-source principles, we have chosen to make our codebase accessible to the public, enabling thorough review and active contribution.
 
+## Table of Contents
+- [Verification and Security](#verification-and-security)
+- [Commented Code](#commented-code)
+- [Getting Started](#getting-started)
+- [Deployment](#deployment)
+- [Further Insights](#further-insights)
+- [Testing](#testing)
+- [Smart Contracts](#smart-contracts)
+- [Scripts](#scripts)
+- [Configuration](#configuration)
+- [Contribution](#contribution)
+
 ## Verification and Security
 
 Each modification to this project undergoes a meticulous verification process and subsequent signing. This stringent approach guarantees the authenticity and integrity of our codebase. In case you encounter any modifications that lack appropriate verification, we strongly advise against cloning or utilizing them, as they might harbor malicious code.
@@ -80,7 +92,19 @@ Two pivotal scripts grace this project:
 1. `1_deploy.js`: Orchestrates the deployment of smart contracts.
 2. `2_seed-exchange.js`: Establishes the foundational elements of exchange functionality.
 
-## Deploying Smart Contracts
+## Configuration
+
+The `config.json` file in the repository contains the following components:
+
+### Local Blockchain (31337):
+
+- **Exchange:** Ethereum address for the exchange contract: `0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9`
+- **CADex:** Ethereum address for CADex contract: `0x5FbDB2315678afecb367f032d93F642f64180aa3`
+- **DAI:** Ethereum address for DAI contract: `0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512`
+- **USDC:** Ethereum address for USDC contract: `0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0`
+- **Explorer URL:** Local explorer URL: `#`
+
+## Deploying Smart Contracts Locally
 
 To embark on the deployment of smart contracts onto the blockchain, adhere to the ensuing protocol:
 
@@ -96,25 +120,23 @@ npx hardhat node
 npx hardhat run --network localhost scripts/1_deploy.js
 ```
 
-## Configuration
-
-The `config.json` file in the repository contains the following components:
-
-### Local Blockchain (31337):
-
-- **Exchange:** Ethereum address for the exchange contract: `0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9`
-- **CADex:** Ethereum address for CADex contract: `0x5FbDB2315678afecb367f032d93F642f64180aa3`
-- **DAI:** Ethereum address for DAI contract: `0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512`
-- **USDC:** Ethereum address for USDC contract: `0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0`
-- **Explorer URL:** Local explorer URL: `#`
-
-### Ethereum Mainnet (11155111):
-
-- **Explorer URL:** Sepolia testnet explorer URL: `https://sepolia.etherscan.io/`
-
 ### Goerli Testnet (5):
 
-- **Explorer URL:** Goerli testnet explorer URL: `https://goerli.etherscan.io/`
+- **Exchange:** Ethereum address for the exchange contract: `0x93b3674A9B52c9B42ED9089F51d4f1473D5eE2B9`
+- **CADex:** Ethereum address for CADex contract: `0xB06e67dd2c20C411eAB50b424A18e912A9129e8F`
+- **DAI:** Ethereum address for DAI contract: `0x4Efe71547EE4Fed48b27C387ca40c200C05b2A44`
+- **USDC:** Ethereum address for USDC contract: `0xc647b99d23A76855100514515aAE2b81e09ac3a7`
+- **Explorer URL:** Local explorer URL: `https://goerli.etherscan.io/`
+
+## Deploying Smart Contracts Testnet
+
+To embark on the deployment of smart contracts onto the blockchain, adhere to the ensuing protocol:
+
+2. With the node operational, deploy the smart contracts using the script provided:
+
+```bash
+npx hardhat run --network goerli scripts/1_deploy.js
+```
 
 ## Contribution
 

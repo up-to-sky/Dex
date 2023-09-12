@@ -14,10 +14,20 @@
     },
     "explorerURL": "#"
   },
-  "11155111": {
-    "explorerURL": "https://sepolia.etherscan.io/"
-  },
   "5": {
+    "exchange": {
+      "address": "0x93b3674A9B52c9B42ED9089F51d4f1473D5eE2B9"
+    },
+    "cadex": {
+      "address": "0xB06e67dd2c20C411eAB50b424A18e912A9129e8F"
+    },
+    "dai": {
+      "address": "0x4Efe71547EE4Fed48b27C387ca40c200C05b2A44"
+    },
+    "usdc": {
+      "address": "0xc647b99d23A76855100514515aAE2b81e09ac3a7" 
+    },
     "explorerURL": "https://goerli.etherscan.io/"
+
   }
 }
