@@ -11,6 +11,33 @@
   --clr-green: #66BB6A;
 }
 
+@media screen and (max-width: 768px) {
+  html {
+    font-size: 16px; 
+  }
+
+  main {
+    padding: 0.75em; 
+  }
+
+
+  .exchange__markets,
+  .exchange__transfers,
+  .exchange__orders {
+    grid-column-start: 1;
+    grid-column-end: 13;
+  }
+
+  .exchange__header--brand {
+    grid-column-start: 1;
+    grid-column-end: 13;
+  }
+
+  .exchange__header--networks {
+    display: none; 
+  }
+}
+
 /* ------------------------------------------------------ */
 
 html {

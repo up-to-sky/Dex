@@ -13,7 +13,7 @@
       "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0" 
     },
     "explorerURL": "#"
-  },
+    },
   "5": {
     "exchange": {
       "address": "0x93b3674A9B52c9B42ED9089F51d4f1473D5eE2B9"
@@ -28,6 +28,50 @@
       "address": "0xc647b99d23A76855100514515aAE2b81e09ac3a7" 
     },
     "explorerURL": "https://goerli.etherscan.io/"
-
+    },
+  "11155111": {
+    "exchange": {
+      "address": "0x66D1Cd53CcF46C1F2b9eF9d17E08E922a11A29aF"
+    },
+    "cadex": {
+      "address": "0xAE120Ea7edB153620012bdDf5fc2A195Ea896066"
+    },
+    "dai": {
+      "address": "0xD5572F339DF412649A967097F5A4eDEefA8255E3"
+    },
+    "usdc": {
+      "address": "0x587BB6001B74294e4dd7fF96E0627A9536B182eF" 
+    },
+    "explorerURL": "https://sepolia.etherscan.io/"
+    },
+  "421613": {
+    "exchange": {
+      "address": "0x587BB6001B74294e4dd7fF96E0627A9536B182eF"
+    },
+    "cadex": {
+      "address": "0xAE120Ea7edB153620012bdDf5fc2A195Ea896066"
+    },
+    "dai": {
+      "address": "0xD5572F339DF412649A967097F5A4eDEefA8255E3"
+    },
+    "usdc": {
+      "address": "0xD5572F339DF412649A967097F5A4eDEefA8255E3" 
+    },
+    "explorerURL": "https://sepolia.arbiscan.io/"
+    },
+  "80001": {
+    "exchange": {
+      "address": "0xB06e67dd2c20C411eAB50b424A18e912A9129e8F"
+    },
+    "cadex": {
+      "address": "0xD5572F339DF412649A967097F5A4eDEefA8255E3"
+    },
+    "dai": {
+      "address": "0x587BB6001B74294e4dd7fF96E0627A9536B182eF"
+    },
+    "usdc": {
+      "address": "0x66D1Cd53CcF46C1F2b9eF9d17E08E922a11A29aF" 
+    },
+    "explorerURL": "https://mumbai.polygonscan.com/"
   }
 }
