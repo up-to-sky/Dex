@@ -13,6 +13,7 @@ Welcome to the Canada-DigitalAssets-Exchange repository. This project represents
 - [Scripts](#scripts)
 - [Configuration](#configuration)
 - [Contribution](#contribution)
+- [Project Updates](#project-updates)
 
 ## Verification and Security
 
@@ -106,7 +107,7 @@ The `config.json` file in the repository contains the following components:
 
 ## Deploying Smart Contracts Locally
 
-To embark on the deployment of smart contracts onto the blockchain, adhere to the ensuing protocol:
+To embark on the deployment of smart contracts onto the local blockchain, adhere to the ensuing protocol:
 
 1. Initiate the Hardhat node via the subsequent command:
 
@@ -130,7 +131,7 @@ npx hardhat run --network localhost scripts/1_deploy.js
 
 ## Deploying Smart Contracts Testnet
 
-To embark on the deployment of smart contracts onto the blockchain, adhere to the ensuing protocol:
+To embark on the deployment of smart contracts onto the testnet blockchain, adhere to the ensuing protocol:
 
 2. With the node operational, deploy the smart contracts using the script provided:
 
@@ -143,3 +144,9 @@ npx hardhat run --network goerli scripts/1_deploy.js
 Community contributions are enthusiastically welcomed. Should you identify bugs, possess feature requests, or harbor intentions of enhancing the project, we extend an invitation to open an issue or submit a pull request.
 
 We extend our gratitude for exploring our project. Your interest is sincerely appreciated.
+
+## Project Updates
+
+As a dynamic project operating in the ever-evolving ecosystem of blockchain technology and the cryptospace, we are committed to continuous learning and improvement. We will regularly update this project to modernize and moderate it in line with the latest developments and best practices. Stay tuned for updates and improvements!
+
+For more information, please visit our project website: [Canada Digital Assets Exchange](https://muddy-bonus-4882.on.fleek.co)
